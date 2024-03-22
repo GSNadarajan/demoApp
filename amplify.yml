@@ -21,7 +21,7 @@ backendDeploymentStatus:
  commands:
     - export ENABLE_AUTO_BUILD=false
     - |
-      STATUS=$(curl -s -o /dev/null -w "%{http_code}" 'https://ratbacml49.execute-api.us-east-1.amazonaws.com/dev2/getJobListBasic' \
+      STATUS=$(curl -s -o /dev/null -w "%{http_code}" 'https://incorrect-url.example.com/dev2/getJobListBasic' \
         -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdHR1LmdAc2tpbGxyYW5rLmlvIiwiaWF0IjoxNzEwNzYwMDY0LCJleHAiOjE3MTMzNTIwNjR9.qEh3KfvULrBuZ6p5wCcuSisNOeltIVKg-s3WGQfbHdM' \
         -H 'Content-Type: application/json' \
         --data-raw '{"employerId":"65f8207adf6e36206564563f"}')
