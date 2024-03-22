@@ -1,0 +1,26 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Prebuild step is not needed"
+    build:
+      commands:
+        - echo "Build step is not needed"
+  artifacts:
+    baseDirectory: public
+    files:
+      - '**/*'
+  cache:
+    paths: []
+
+backendDeploymentStatus:
+  commands:
+    - STATUS=$(curl -s https://your-backend-deployment-status-endpoint)
+    - if [ "$STATUS" == "success" ]; then echo "Backend deployment successful"; else exit 1; fi
+
+deployFrontend:
+  commands:
+    - amplify publish
+  dependsOn:
+    - backendDeploymentStatus
