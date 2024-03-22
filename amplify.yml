@@ -18,6 +18,7 @@ backendDeploymentStatus:
   commands:
     - STATUS=$(curl -s -o /dev/null -w "%{http_code}" 'https://ratbacml49.execute-api.us-east-1.amazonaws.com/dev2/getJobListBasic' -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdHR1LmdAc2tpbGxyYW5rLmlvIiwiaWF0IjoxNzEwNzYwMDY0LCJleHAiOjE3MTMzNTIwNjR9.qEh3KfvULrBuZ6p5wCcuSisNOeltIVKg-s3WGQfbHdM')
     - if [ "$STATUS" == "200" ]; then echo "Backend deployment successful"; else echo "Backend deployment failed"; exit 1; fi
+    - if [ "$STATUS" == "200" ]; then export ENABLE_AUTO_BUILD=true; else export ENABLE_AUTO_BUILD=false; fi
 
 deployFrontend:
   commands:
@@ -25,3 +26,4 @@ deployFrontend:
     - amplify publish
   dependsOn:
     - backendDeploymentStatus
+  if: $ENABLE_AUTO_BUILD == 'true'
