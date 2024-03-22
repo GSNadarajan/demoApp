@@ -16,11 +16,12 @@ frontend:
 
 backendDeploymentStatus:
   commands:
-    - STATUS=$(curl -s https://your-backend-deployment-status-endpoint)
-    - if [ "$STATUS" == "success" ]; then echo "Backend deployment successful"; else exit 1; fi
+    - STATUS=$(curl -s -o /dev/null -w "%{http_code}" 'https://ratbacml49.execute-api.us-east-1.amazonaws.com/dev2/getJobListBasic' -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdHR1LmdAc2tpbGxyYW5rLmlvIiwiaWF0IjoxNzEwNzYwMDY0LCJleHAiOjE3MTMzNTIwNjR9.qEh3KfvULrBuZ6p5wCcuSisNOeltIVKg-s3WGQfbHdM')
+    - if [ "$STATUS" == "200" ]; then echo "Backend deployment successful"; else echo "Backend deployment failed"; exit 1; fi
 
 deployFrontend:
   commands:
+    - echo "Checking backend deployment status..."
     - amplify publish
   dependsOn:
     - backendDeploymentStatus
