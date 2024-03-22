@@ -1,0 +1,15 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Prebuild step is not needed"
+    build:
+      command zs:
+        - echo "Build step is not needed"
+  artifacts:
+    baseDirectory: public
+    files:
+      - '**/*'
+  cache:
+    paths: []
