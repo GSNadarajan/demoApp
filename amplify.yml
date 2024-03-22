@@ -1,35 +1,16 @@
-version: 0.1
+version: 1
 frontend:
- phases:
+  phases:
     preBuild:
       commands:
-        - echo "Prebuild step is not needed"
+        - export NEXT_PUBLIC_ASSET_GRAPH_API_BASE_URL=http://localhost:5000
     build:
       commands:
-        - echo "Build step is not needed"
-      dependsOn:
-        - backendDeploymentStatus
-      if: $ENABLE_AUTO_BUILD == 'true'
- artifacts:
+        - echo "No build commands for a plain HTML project"
+  artifacts:
     baseDirectory: public
     files:
       - '**/*'
- cache:
-    paths: []
-
-backendDeploymentStatus:
- commands:
-    - export ENABLE_AUTO_BUILD=false
-    - |
-      STATUS=$(curl -s -o /dev/null -w "%{http_code}" 'https://incorrect-url.example.com/dev2/getJobListBasic' \
-        -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdHR1LmdAc2tpbGxyYW5rLmlvIiwiaWF0IjoxNzEwNzYwMDY0LCJleHAiOjE3MTMzNTIwNjR9.qEh3KfvULrBuZ6p5wCcuSisNOeltIVKg-s3WGQfbHdM' \
-        -H 'Content-Type: application/json' \
-        --data-raw '{"employerId":"65f8207adf6e36206564563f"}')
-    - if [ "$STATUS" == "200" ]; then echo "Backend deployment successful"; export ENABLE_AUTO_BUILD=true; else echo "Backend deployment failed"; export ENABLE_AUTO_BUILD=false; fi
-deployFrontend:
- commands:
-    - echo "Checking backend deployment status..."
-    - amplify publish
- dependsOn:
-    - backendDeploymentStatus
- if: $ENABLE_AUTO_BUILD == 'true'
+  cache:
+    paths:
+      - node_modules/**/*
