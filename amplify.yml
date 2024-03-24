@@ -8,7 +8,7 @@ frontend:
       commands:
         - echo "No build commands for a plain HTML project"
   artifacts:
-    baseDirectory: public
+    baseDirectory: public/api
     files:
       - '**/*'
   cache:
